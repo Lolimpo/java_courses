@@ -14,7 +14,7 @@ class Calc{
             oper = scanner.next();
             num2 = scanner.nextInt();
         } catch (InputMismatchException e) {
-            System.out.println("Incorrect input.");
+            System.err.println("Incorrect input.");
         }
 
         switch(oper) {
