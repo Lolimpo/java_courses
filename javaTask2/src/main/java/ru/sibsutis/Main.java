@@ -18,7 +18,8 @@ public class Main {
         Random random = new Random();
         Developer[] developer = new Developer[1000];
         Manager[] manager = new Manager[1000];
-
+        developer[0] = new Developer("Name","Email","Project"); developer[0].toCSV();
+        manager[0] = new Manager("Name", "Email", "Level"); manager[0].toCSV();
         for(int i = 0; i < 1000; i++) {
             developer[i] = new Developer(nameTemplates[random.nextInt(nameTemplates.length)],
                     emailTemplates[random.nextInt(emailTemplates.length)],
@@ -34,13 +35,12 @@ public class Main {
 
     public static void main(String[] args) {
        try {
-           File developersCSV = new File("~/javaTask2/", "developers.csv");
-           File managersCSV = new File("~/javaTask2/", "managers.csv");
-           if(developersCSV.createNewFile() || managersCSV.createNewFile())
+           File developersCSV = new File("/home/lolimpo/Projects/javaTask2/", "developers.csv");
+           File managersCSV = new File("/home/lolimpo/Projects/javaTask2/", "managers.csv");
+           if(!(developersCSV.createNewFile() && managersCSV.createNewFile()))
                generateCSVs();
        } catch(Exception e) {
            System.err.println(e);
         }
-
     }
 }
