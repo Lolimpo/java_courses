@@ -22,7 +22,8 @@ class Manager extends User implements CSV {
         FileWriter fw;
         try {
             fw = new FileWriter("managers.csv", true);
-            str = (String.join(";", this.getName(), this.getEmail(), this.getLevel(), "\n"));
+            str = (String.join(",", this.getName(), this.getEmail(), this.getLevel()));
+            str = str.concat("\n");
             fw.write(str);
             fw.close();
         } catch(IOException e) {
@@ -37,7 +38,7 @@ class Manager extends User implements CSV {
             fr = new FileReader("managers.csv");
             Scanner in = new Scanner(fr);
             String str = in.nextLine();
-            String[] arr = str.split(";");
+            String[] arr = str.split(",");
         } catch(FileNotFoundException e) {
             System.err.println(e);
         }

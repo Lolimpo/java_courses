@@ -35,9 +35,9 @@ public class Main {
 
     public static void main(String[] args) {
        try {
-           File developersCSV = new File("/home/lolimpo/Projects/javaTask2/", "developers.csv");
-           File managersCSV = new File("/home/lolimpo/Projects/javaTask2/", "managers.csv");
-           if(!(developersCSV.createNewFile() && managersCSV.createNewFile()))
+           File developersCSV = new File("/home/lolimpo/Projects/java_courses/javaTask2/", "developers.csv");
+           File managersCSV = new File("/home/lolimpo/Projects/java_courses/javaTask2/", "managers.csv");
+           if(developersCSV.createNewFile() || managersCSV.createNewFile())
                generateCSVs();
        } catch(Exception e) {
            System.err.println(e);
