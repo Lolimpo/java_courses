@@ -9,4 +9,5 @@ repositories {
 
 dependencies {
     compile group: 'org.mongodb', name: 'mongodb-driver', version: '3.12.3'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.3'
 }
