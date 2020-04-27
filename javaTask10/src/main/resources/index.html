@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html">
+<html>
 <head>
     <meta charset="UTF-8">
     <title>REST для управления MongoDB</title>
@@ -7,32 +7,24 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-
-    <script type="text/javascript">
-        $(document).ready(function() {
-            $.ajax({
-                method: 'GET',
-                url: "/info",
-                success: function (result) {
-                    var tmp_str = "<table border='1'>"
-                    for (var tmp = 0; tmp < result.length(); tmp++) {
-                        tmp_str = tmp_str + "<tr><td>" + result[tmp].name + "</td><td>" + result[tmp].age + "</td></tr>"
-                    }
-                    tmp_str = tmp_str + "</table>"
-                    $("#result").html(tmp_str);
-                    console.log(tmp_str);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
-    </script>
 </head>
 <body>
+    <script>
+        $.getJSON('http://localhost:25565/info', function(data) {
+            console.log("Ok")
+            var items = [];
+            $.each(data, function(key, val){
+                items.push('<li id="' + key + '">' + val + '</li>');
+            });
+            $('<ul/>', {
+                'class': 'my-new-list',
+                html: items.join('')
+            }).appendTo('body');
+        });
+    </script>
     <h1>Hello, Username!</h1>
     <div class="row-cols-md-6">
-        <a id="result">Test</a>
+        <a class="result">Test</a>
     </div>
 </body>
 </html>
