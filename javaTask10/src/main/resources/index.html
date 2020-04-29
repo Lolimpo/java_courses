@@ -1,30 +1,97 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <meta charset="UTF-8">
-    <title>REST для управления MongoDB</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
-</head>
-<body>
-    <script>
-        $.getJSON('http://localhost:25565/info', function(data) {
-            console.log("Ok")
-            var items = [];
-            $.each(data, function(key, val){
-                items.push('<li id="' + key + '">' + val + '</li>');
-            });
-            $('<ul/>', {
-                'class': 'my-new-list',
-                html: items.join('')
-            }).appendTo('body');
-        });
-    </script>
-    <h1>Hello, Username!</h1>
-    <div class="row-cols-md-6">
-        <a class="result">Test</a>
-    </div>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>REST для управления MongoDB</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <script>
+            function getInfo() {
+                $.getJSON(`http://localhost:8081/info`, function (data) {
+                    console.log(data);
+                    document.getElementById("header4").style.visibility='hidden'
+                    var text = `<table class="table table-bordered"><tr><th>ФИО</th><th>Возраст</th><th>Интересы</th></tr>`;
+                    for (var el = 0; el < data.length; el++) {
+                        text += `<tr><td>${data[el].name}</td><td>${data[el].age}</td><td>${data[el].interests}</td></tr>`
+                    }
+                    text += '</table>';
+                    $(".result").html(text);
+                }).fail(function () {
+                    var text = `<p>No connection to the server :c Try again.</p>`;
+                    $(".result").html(text);
+                });
+            }
+
+            function insertObject() {
+                if (document.getElementById("name").value == 0 || document.getElementById("age").value == 0
+                    || document.getElementById("interests").value == 0) {
+                    alert("Blank space found. Check your input fields.")
+                    return;
+                }
+                $.getJSON("http://localhost:8081/insert?name=" + document.getElementById("name").value + "&age=" +
+                    document.getElementById("age").value + "&interests=" + document.getElementById("interests").value, function (data) {
+                    console.log(data);
+                    alert("Successfully inserted!")
+                    getInfo();
+                }).fail(function () {
+                        alert("No connection to the server :c Try again.");
+                });
+            }
+
+            function deleteEntry() {
+                if (document.getElementById("delete").value == null) {
+                    alert("No delete name provided. Check your input field.")
+                    return;
+                }
+                $.getJSON("http://localhost:8081/delete?name=" + document.getElementById("delete").value, function (data) {
+                    console.log(data)
+                    alert("Successfully deleted!")
+                    getInfo()
+                }).fail(function () {
+                    alert("No connection to the server or wrong entry name :c Try again.");
+                });
+            }
+        </script>
+        <h2 id="header2">Hello, User!</h2>
+        <h4 id="header4">For the first time you need to push the button "Get DB info"</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <p class="result">Results would be shown here!</p>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary mb-1" onclick="getInfo()">Update DB</button>
+        <div class="w-25">
+            <form>
+                <div class="input-group mb-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Name</span>
+                    </div>
+                    <input id="name" type="text" class="form-control" placeholder="Input Name" aria-label="Name" aria-describedby="basic-addon1">
+                </div>
+                <div class="input-group mb-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon2">Age</span>
+                    </div>
+                    <input id="age" type="text" class="form-control" placeholder="Input Age" aria-label="Age" aria-describedby="basic-addon2">
+                </div>
+                <div class="input-group mb-1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon3">Interests</span>
+                    </div>
+                    <input id="interests" type="text" class="form-control" placeholder="Input Interests" aria-label="Interests" aria-describedby="basic-addon3">
+                </div>
+            </form>
+        </div>
+        <button type="button" class="btn btn-success mb-1" onclick="insertObject()">Insert</button>
+        <div class="input-group mb-1 w-25">
+            <div class="input-group-prepend">
+                <button class="btn btn-danger" type="button" onclick="deleteEntry()">Delete</button>
+            </div>
+            <input id="delete" type="text" class="form-control" placeholder="Insert name of entry" aria-label="" aria-describedby="basic-addon1">
+        </div>
+    </body>
 </html>
