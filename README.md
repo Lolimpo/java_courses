@@ -10,7 +10,7 @@ Task №6 - ![status](https://img.shields.io/badge/status-Done-brightgreen)
 Task №7 - ![status](https://img.shields.io/badge/status-In%20Progress-yellow)  
 Task №8 - ![status](https://img.shields.io/badge/status-In%20Progress-yellow)  
 Task №9 - ![status](https://img.shields.io/badge/status-Done-brightgreen)  
-Task №10 - ![status](https://img.shields.io/badge/status-In%20Progress-yellow)  
+Task №10 - ![status](https://img.shields.io/badge/status-Done-brightgreen)  
 Task №11 - ![status](https://img.shields.io/badge/status-In%20Progress-yellow)  
 
 **Tasks list:**
